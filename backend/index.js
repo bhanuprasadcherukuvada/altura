@@ -9,9 +9,9 @@ app.use(cors())
 app.use(bodyParser.json())
 
 const razorpay = new Razorpay({
-	key_id: 'rzp_test_uGoq5ABJztRAhk',
-	key_secret: 'FySe2f5fie9hij1a5s6clk9B'
-})
+  key_id: "rzp_test_99gXTJj4zIVpz4",
+  key_secret: "juLWbShZMTicocGH1Hpwu0SP",
+});
 
 app.get('/logo.svg', (req, res) => {
 	res.sendFile(path.join(__dirname, 'logo.svg'))
