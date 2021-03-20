@@ -17,7 +17,7 @@ function loadScript(src) {
 
 const __DEV__ = document.domain === "localhost";
 
-export default function Razorpay() {
+export default function Razorpay(props) {
 
       const [name, setName] = useState("nmitevents");
 
@@ -42,8 +42,8 @@ export default function Razorpay() {
       currency: data.currency,
       amount: data.amount.toString(),
       order_id: data.id,
-      name: "Donation",
-      description: "Thank you for nothing. Please give us some money",
+      name: "Event Payment",
+      description: "",
       image: "http://localhost:1337/logo.svg",
       handler: function (response) {
         alert(response.razorpay_payment_id);
@@ -51,9 +51,9 @@ export default function Razorpay() {
         alert(response.razorpay_signature);
       },
       prefill: {
-        name,
-        email: "sdfdsjfh2@ndsfdf.com",
-        phone_number: "9899999999",
+        name:props.name,
+        email: props.email,
+        phone_number: props.phone,
       },
     };
     const paymentObject = new window.Razorpay(options);
@@ -61,6 +61,9 @@ export default function Razorpay() {
   }
     return (
         <div>
+          <p>{props.name}</p>
+          <p>{props.email}</p>
+          <p>{props.phone}</p>
              <a
           className="App-link"
           onClick={displayRazorpay}

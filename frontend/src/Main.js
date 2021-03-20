@@ -13,22 +13,24 @@ import Login from './Components/Login'
 import PrivateRoute from './Components/util/PrivateRoute'
 import UserView from './Components/Responding/UserView'
 import RadioCheck from './Components/Responding/RadioCheck'
+import Razorpay from './Razorpay'
 
 function Main() {
   return (
     <div>
-        <Router>
-            <Switch>
-                <Route exact path="/" component={Home}/> 
-                <Route exact path="/login" component={Login}/>
-                
-                <PrivateRoute path="/form/:formId" component={EditForm}/>
-                <Route exact path="/s/:formId" component={UserView} />
-                <Route exact path="/fuck" component={RadioCheck} />
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login} />
 
-               
-            </Switch>
-        </Router>
+          <PrivateRoute path="/form/:formId" component={EditForm} />
+          <Route exact path="/s/:formId" component={UserView} />
+          <Route
+            path="/payment"
+            render={(props) => <Razorpay {...props} />}
+          />
+        </Switch>
+      </Router>
     </div>
   );
 }

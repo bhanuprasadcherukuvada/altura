@@ -134,13 +134,7 @@ function Login(props){
                                 <p>Already logged in. Want to logout?</p>
                                 <button onClick={logout}>Logout </button>
                             </div>) : (
-                           <Button
-                            onClick={loginAsGuest}
-                            variant="contained"
-                            style={{textTransform: "none"}}
-                            startIcon={<Avatar  src={"https://static.thenounproject.com/png/3244607-200.png"}/>  } >
-                            Login as Guest(Anonymous)
-                        </Button>
+                           null
                    )
                }
             </div>

@@ -17,13 +17,15 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import {toast} from 'react-toastify';
 import auth from '../../services/authService';
+import {Redirect, useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({}));
 
 function UserView(props) {
   const classes = useStyles();
+  const history = useHistory();
 
   const [userId, setUserId] = React.useState('');
   const [formData, setFormData] = React.useState({});
@@ -44,14 +46,11 @@ function UserView(props) {
     if (auth.isAuthenticated()) {
       var userr = auth.getCurrentUser();
       console.log(userr.id);
+      console.log(userr);
       setUserId(userr.id);
     } else {
-      var anonymousUserId =
-        'anonymous' +
-        Math.random().toString(36).substring(2, 15) +
-        Math.random().toString(36).substring(2, 15);
-      console.log(anonymousUserId);
-      setUserId(anonymousUserId);
+      toast("you have to be logged in to fill the form");
+      history.push('/login');
     }
   }, []);
 
@@ -134,8 +133,16 @@ function UserView(props) {
 
     formService.submitResponse(submissionData).then(
       (data2) => {
+        
         setIsSubmitted(true);
         console.log(data2);
+        return <Redirect
+          to={{
+            pathname: "payment",
+            state: { userid:userId, name: "",email:"",phone:"" },
+          }}
+        />;
+        
       },
       (error) => {
         const resMessage =
