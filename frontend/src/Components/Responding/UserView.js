@@ -1,25 +1,25 @@
-import React from 'react';
+import React from "react";
 
-import { Grid } from '@material-ui/core';
+import { Grid } from "@material-ui/core";
 
-import { Paper, Typography } from '@material-ui/core';
+import { Paper, Typography } from "@material-ui/core";
 
-import formService from '../../services/formService';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Divider from '@material-ui/core/Divider';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import {toast} from 'react-toastify';
-import auth from '../../services/authService';
-import {Redirect, useHistory} from 'react-router-dom';
+import formService from "../../services/formService";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from "@material-ui/core/Radio";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Divider from "@material-ui/core/Divider";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { toast } from "react-toastify";
+import auth from "../../services/authService";
+import { Redirect, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -27,7 +27,8 @@ function UserView(props) {
   const classes = useStyles();
   const history = useHistory();
 
-  const [userId, setUserId] = React.useState('');
+  const [userId, setUserId] = React.useState("");
+  const [userobj, setUserobj] = React.useState({});
   const [formData, setFormData] = React.useState({});
   const [responseData, setResponseData] = React.useState([]);
   //console.log(responseData);
@@ -48,9 +49,10 @@ function UserView(props) {
       console.log(userr.id);
       console.log(userr);
       setUserId(userr.id);
+      setUserobj({ name: userr.name, email: userr.email });
     } else {
       toast("you have to be logged in to fill the form");
-      history.push('/login');
+      history.push("/login");
     }
   }, []);
 
@@ -133,16 +135,8 @@ function UserView(props) {
 
     formService.submitResponse(submissionData).then(
       (data2) => {
-        
         setIsSubmitted(true);
         console.log(data2);
-        return <Redirect
-          to={{
-            pathname: "payment",
-            state: { userid:userId, name: "",email:"",phone:"" },
-          }}
-        />;
-        
       },
       (error) => {
         const resMessage =
@@ -161,55 +155,51 @@ function UserView(props) {
   }
 
   let displayContent = (
-    <div style={{ minHeight: '100vh' }}>
+    <div style={{ minHeight: "100vh" }}>
       <div>
-        <AppBar position='static' style={{ backgroundColor: 'teal' }}>
+        <AppBar position="static" style={{ backgroundColor: "teal" }}>
           <Toolbar>
             <IconButton
-              edge='start'
-              style={{ marginRight: '10px', marginBottom: '5px' }}
-              color='inherit'
-              aria-label='menu'
+              edge="start"
+              style={{ marginRight: "10px", marginBottom: "5px" }}
+              color="inherit"
+              aria-label="menu"
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant='h6' style={{}}>
-<<<<<<< HEAD
-              Online Contests
-=======
+            <Typography variant="h6" style={{}}>
               Altura Forms
->>>>>>> c75d6337635c2d66d16a91ed2f42331cb14fb111
             </Typography>
           </Toolbar>
         </AppBar>
         <br></br>
 
-        <Grid container direction='column' justify='center' alignItems='center'>
-          <Grid item xs={12} sm={5} style={{ width: '100%' }}>
-            <Grid style={{ borderTop: '10px solid teal', borderRadius: 10 }}>
+        <Grid container direction="column" justify="center" alignItems="center">
+          <Grid item xs={12} sm={5} style={{ width: "100%" }}>
+            <Grid style={{ borderTop: "10px solid teal", borderRadius: 10 }}>
               <div>
                 <div>
-                  <Paper elevation={2} style={{ width: '100%' }}>
+                  <Paper elevation={2} style={{ width: "100%" }}>
                     <div
                       style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'flex-start',
-                        marginLeft: '15px',
-                        paddingTop: '20px',
-                        paddingBottom: '20px',
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
+                        marginLeft: "15px",
+                        paddingTop: "20px",
+                        paddingBottom: "20px",
                       }}
                     >
                       <Typography
-                        variant='h4'
+                        variant="h4"
                         style={{
-                          fontFamily: 'sans-serif Roboto',
-                          marginBottom: '15px',
+                          fontFamily: "sans-serif Roboto",
+                          marginBottom: "15px",
                         }}
                       >
                         {formData.name}
                       </Typography>
-                      <Typography variant='subtitle1'>
+                      <Typography variant="subtitle1">
                         {formData.description}
                       </Typography>
                     </div>
@@ -228,39 +218,39 @@ function UserView(props) {
                         <div>
                           <div
                             style={{
-                              display: 'flex',
-                              flexDirection: 'column',
-                              alignItems: 'flex-start',
-                              marginLeft: '6px',
-                              paddingTop: '15px',
-                              paddingBottom: '15px',
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "flex-start",
+                              marginLeft: "6px",
+                              paddingTop: "15px",
+                              paddingBottom: "15px",
                             }}
                           >
                             <Typography
-                              variant='subtitle1'
-                              style={{ marginLeft: '10px' }}
+                              variant="subtitle1"
+                              style={{ marginLeft: "10px" }}
                             >
                               {i + 1}. {ques.questionText}
                             </Typography>
 
-                            {ques.questionImage !== '' ? (
+                            {ques.questionImage !== "" ? (
                               <div>
                                 <img
                                   src={ques.questionImage}
-                                  width='80%'
-                                  height='auto'
+                                  width="80%"
+                                  height="auto"
                                 />
                                 <br></br>
                                 <br></br>
                               </div>
                             ) : (
-                              ''
+                              ""
                             )}
 
                             <div>
                               <RadioGroup
-                                aria-label='quiz'
-                                name='quiz'
+                                aria-label="quiz"
+                                name="quiz"
                                 value={questionvalues[i]}
                                 onChange={(e) => {
                                   handleRadioChange(e.target.value, i);
@@ -270,8 +260,8 @@ function UserView(props) {
                                   <div key={j}>
                                     <div
                                       style={{
-                                        display: 'flex',
-                                        marginLeft: '7px',
+                                        display: "flex",
+                                        marginLeft: "7px",
                                       }}
                                     >
                                       <FormControlLabel
@@ -283,18 +273,18 @@ function UserView(props) {
 
                                     <div
                                       style={{
-                                        display: 'flex',
-                                        marginLeft: '10px',
+                                        display: "flex",
+                                        marginLeft: "10px",
                                       }}
                                     >
-                                      {op.optionImage !== '' ? (
+                                      {op.optionImage !== "" ? (
                                         <img
                                           src={op.optionImage}
-                                          width='64%'
-                                          height='auto'
+                                          width="64%"
+                                          height="auto"
                                         />
                                       ) : (
-                                        ''
+                                        ""
                                       )}
                                       <Divider />
                                     </div>
@@ -310,10 +300,10 @@ function UserView(props) {
                 </Grid>
                 <Grid>
                   <br></br>
-                  <div style={{ display: 'flex' }}>
+                  <div style={{ display: "flex" }}>
                     <Button
-                      variant='contained'
-                      color='primary'
+                      variant="contained"
+                      color="primary"
                       onClick={submitResponse}
                     >
                       Submit
@@ -325,16 +315,17 @@ function UserView(props) {
                 </Grid>
               </div>
             ) : (
-              <div>
-                <Typography variant='body1'>Form submitted</Typography>
-                <Typography variant='body2'>
-                  Thanks for submiting form
-                </Typography>
-
-                <Button onClick={reloadForAnotherResponse}>
-                  Submit another response
-                </Button>
-              </div>
+              <Redirect
+                to={{
+                  pathname: "/payment",
+                  state: {
+                    userid: userId,
+                    name: userobj.name,
+                    email: userobj.email,
+                    phone: "",
+                  },
+                }}
+              />
             )}
           </Grid>
         </Grid>
@@ -354,8 +345,19 @@ const FormControlLabelWrapper = (props) => {
   return (
     <FormControlLabel
       control={<Radio />}
-      label={'Radio ' + props.value + props.jIndex}
+      label={"Radio " + props.value + props.jIndex}
       {...labelProps}
     />
   );
 };
+
+//  <div>
+//                 <Typography variant='body1'>Form submitted</Typography>
+//                 <Typography variant='body2'>
+//                   Thanks for submiting form
+//                 </Typography>
+
+//                 <Button onClick={reloadForAnotherResponse}>
+//                   Submit another response
+//                 </Button>
+//               </div>

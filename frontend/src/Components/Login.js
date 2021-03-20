@@ -1,6 +1,6 @@
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import authService from '../services/authService';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import React from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -35,10 +35,14 @@ const CLIENT_ID =
   '679406044353-lvl5emnpntml0n3hgvknepifevap9osr.apps.googleusercontent.com';
 
 function Login(props) {
+  console.log(props);
   const classes = useStyles();
   let history = useHistory();
   const [isLogined, setIsLogined] = React.useState(false);
   const { from } = props.location.state || { from: { pathname: '/' } };
+  console.log("this is from pathname");
+  console.log(props.location.state);
+  console.log(from.pathname);
 
   React.useEffect(() => {
     setIsLogined(authService.isAuthenticated());
@@ -89,19 +93,19 @@ function Login(props) {
   return (
     <div>
       <CssBaseline />
-      <div style={{ display: 'flex', flexGrow: 1, textAlign: 'start' }}>
-        <AppBar position='relative' style={{ backgroundColor: 'teal' }}>
+      <div style={{ display: "flex", flexGrow: 1, textAlign: "start" }}>
+        <AppBar position="relative" style={{ backgroundColor: "teal" }}>
           <Toolbar>
             <ViewListIcon
               className={classes.icon}
               onClick={() => {
-                history.push('/');
+                history.push("/");
               }}
             />
 
             <Typography
-              variant='h6'
-              color='inherit'
+              variant="h6"
+              color="inherit"
               noWrap
               className={classes.title}
             >
@@ -112,7 +116,7 @@ function Login(props) {
       </div>
       <br></br>
       <main>
-        <Typography component='h1' variant='h5'>
+        <Typography component="h1" variant="h5">
           Login
         </Typography>
         <br></br>
@@ -120,73 +124,42 @@ function Login(props) {
 
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
           }}
         >
-          {console.log(CLIENT_ID + 'hello ')}
+          {console.log(CLIENT_ID + "hello ")}
           {isLogined ? (
-            ''
+            ""
           ) : (
             <GoogleLogin
               clientId={CLIENT_ID}
               render={(renderProps) => (
                 <GoogleButton
                   onClick={renderProps.onClick}
-                  style={{ textAlign: 'center', alignSelf: 'center' }}
+                  disabled={renderProps.disabled}
+                  style={{ textAlign: "center", alignSelf: "center" }}
                 />
-<<<<<<< HEAD
-            }
-            <br></br>
-            <br></br>
-            <div>
-               {  isLogined ? (<div>
-                                <p>Already logged in. Want to logout?</p>
-                                <button onClick={logout}>Logout </button>
-                            </div>) : (
-                           null
-                   )
-               }
-            </div>
-        </div>
-                
-            </main>
-=======
               )}
-              buttonText='Login'
+              buttonText="Login"
               onSuccess={loginGoogle}
               onFailure={handleLoginFailure}
-              cookiePolicy={'single_host_origin'}
-              responseType='code,token'
+              cookiePolicy={"single_host_origin"}
+              responseType="code,token"
             />
           )}
           <br></br>
           <br></br>
+
           <div>
             {isLogined ? (
               <div>
                 <p>Already logged in. Want to logout?</p>
                 <button onClick={logout}>Logout </button>
               </div>
-            ) : (
-              <Button
-                onClick={loginAsGuest}
-                variant='contained'
-                style={{ textTransform: 'none' }}
-                startIcon={
-                  <Avatar
-                    src={
-                      'https://static.thenounproject.com/png/3244607-200.png'
-                    }
-                  />
-                }
-              >
-                Login as Guest(Anonymous)
-              </Button>
-            )}
+            ) : null}
           </div>
->>>>>>> c75d6337635c2d66d16a91ed2f42331cb14fb111
         </div>
       </main>
     </div>
