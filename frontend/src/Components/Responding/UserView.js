@@ -174,7 +174,11 @@ function UserView(props) {
               <MenuIcon />
             </IconButton>
             <Typography variant='h6' style={{}}>
+<<<<<<< HEAD
               Online Contests
+=======
+              Altura Forms
+>>>>>>> c75d6337635c2d66d16a91ed2f42331cb14fb111
             </Typography>
           </Toolbar>
         </AppBar>
