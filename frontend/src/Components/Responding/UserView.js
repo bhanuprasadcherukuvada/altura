@@ -1,31 +1,31 @@
-import React from "react";
+import React from 'react';
 
-import { Grid } from "@material-ui/core";
+import { Grid } from '@material-ui/core';
 
-import { Paper, Typography } from "@material-ui/core";
+import { Paper, Typography } from '@material-ui/core';
 
-import formService from "../../services/formService";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Radio from "@material-ui/core/Radio";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import Divider from "@material-ui/core/Divider";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import formService from '../../services/formService';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Divider from '@material-ui/core/Divider';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
-import auth from "../../services/authService";
+import auth from '../../services/authService';
 
 const useStyles = makeStyles((theme) => ({}));
 
 function UserView(props) {
   const classes = useStyles();
 
-  const [userId, setUserId] = React.useState("");
+  const [userId, setUserId] = React.useState('');
   const [formData, setFormData] = React.useState({});
   const [responseData, setResponseData] = React.useState([]);
   //console.log(responseData);
@@ -35,7 +35,10 @@ function UserView(props) {
 
   const [questions, setQuestions] = React.useState([]);
   const [value, setValue] = React.useState([]);
-  let questionvalues = null;
+  const [questionvalues, setQuestionvalues] = React.useState(
+    new Array(100).fill(0)
+  );
+  // let questionvalues = ;
   //console.log(value);
   React.useEffect(() => {
     if (auth.isAuthenticated()) {
@@ -44,7 +47,7 @@ function UserView(props) {
       setUserId(userr.id);
     } else {
       var anonymousUserId =
-        "anonymous" +
+        'anonymous' +
         Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).substring(2, 15);
       console.log(anonymousUserId);
@@ -67,9 +70,16 @@ function UserView(props) {
     //  console.log(data);
     //console.log(fakeData);
     // console.log(j);
-    questionvalues[i] = j;
-
+    var dup = questionvalues;
+    dup[i] = parseInt(j);
+    // questionvalues[i] = j;
+    setQuestionvalues(dup);
     setValue(j);
+    console.log(
+      questionvalues,
+      questionvalues.length,
+      typeof questionvalues[0]
+    );
 
     var fakeRData = [...responseData];
 
@@ -97,11 +107,10 @@ function UserView(props) {
 
         setFormData(data);
         setQuestions(data.questions);
-        questionvalues = new Array(data.questions.length);
-        for(let i = 0;i<data.questions.length;i++){
-          questionvalues[i] = 0;
-        }
-        
+        //questionvalues = new Array(data.questions.length);
+        // for (let i = 0; i < data.questions.length; i++) {
+        //   questionvalues[i] = 0;
+        // }
       },
       (error) => {
         const resMessage =
@@ -144,51 +153,52 @@ function UserView(props) {
     window.location.reload(true);
   }
 
-  let displayContent = ( <div style={{ minHeight: "100vh" }}>
+  let displayContent = (
+    <div style={{ minHeight: '100vh' }}>
       <div>
-        <AppBar position="static" style={{ backgroundColor: "teal" }}>
+        <AppBar position='static' style={{ backgroundColor: 'teal' }}>
           <Toolbar>
             <IconButton
-              edge="start"
-              style={{ marginRight: "10px", marginBottom: "5px" }}
-              color="inherit"
-              aria-label="menu"
+              edge='start'
+              style={{ marginRight: '10px', marginBottom: '5px' }}
+              color='inherit'
+              aria-label='menu'
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" style={{}}>
+            <Typography variant='h6' style={{}}>
               Velocity Forms
             </Typography>
           </Toolbar>
         </AppBar>
         <br></br>
 
-        <Grid container direction="column" justify="center" alignItems="center">
-          <Grid item xs={12} sm={5} style={{ width: "100%" }}>
-            <Grid style={{ borderTop: "10px solid teal", borderRadius: 10 }}>
+        <Grid container direction='column' justify='center' alignItems='center'>
+          <Grid item xs={12} sm={5} style={{ width: '100%' }}>
+            <Grid style={{ borderTop: '10px solid teal', borderRadius: 10 }}>
               <div>
                 <div>
-                  <Paper elevation={2} style={{ width: "100%" }}>
+                  <Paper elevation={2} style={{ width: '100%' }}>
                     <div
                       style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "flex-start",
-                        marginLeft: "15px",
-                        paddingTop: "20px",
-                        paddingBottom: "20px",
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        marginLeft: '15px',
+                        paddingTop: '20px',
+                        paddingBottom: '20px',
                       }}
                     >
                       <Typography
-                        variant="h4"
+                        variant='h4'
                         style={{
-                          fontFamily: "sans-serif Roboto",
-                          marginBottom: "15px",
+                          fontFamily: 'sans-serif Roboto',
+                          marginBottom: '15px',
                         }}
                       >
                         {formData.name}
                       </Typography>
-                      <Typography variant="subtitle1">
+                      <Typography variant='subtitle1'>
                         {formData.description}
                       </Typography>
                     </div>
@@ -207,39 +217,39 @@ function UserView(props) {
                         <div>
                           <div
                             style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "flex-start",
-                              marginLeft: "6px",
-                              paddingTop: "15px",
-                              paddingBottom: "15px",
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'flex-start',
+                              marginLeft: '6px',
+                              paddingTop: '15px',
+                              paddingBottom: '15px',
                             }}
                           >
                             <Typography
-                              variant="subtitle1"
-                              style={{ marginLeft: "10px" }}
+                              variant='subtitle1'
+                              style={{ marginLeft: '10px' }}
                             >
                               {i + 1}. {ques.questionText}
                             </Typography>
 
-                            {ques.questionImage !== "" ? (
+                            {ques.questionImage !== '' ? (
                               <div>
                                 <img
                                   src={ques.questionImage}
-                                  width="80%"
-                                  height="auto"
+                                  width='80%'
+                                  height='auto'
                                 />
                                 <br></br>
                                 <br></br>
                               </div>
                             ) : (
-                              ""
+                              ''
                             )}
 
                             <div>
                               <RadioGroup
-                                aria-label="quiz"
-                                name="quiz"
+                                aria-label='quiz'
+                                name='quiz'
                                 value={questionvalues[i]}
                                 onChange={(e) => {
                                   handleRadioChange(e.target.value, i);
@@ -249,8 +259,8 @@ function UserView(props) {
                                   <div key={j}>
                                     <div
                                       style={{
-                                        display: "flex",
-                                        marginLeft: "7px",
+                                        display: 'flex',
+                                        marginLeft: '7px',
                                       }}
                                     >
                                       <FormControlLabel
@@ -262,18 +272,18 @@ function UserView(props) {
 
                                     <div
                                       style={{
-                                        display: "flex",
-                                        marginLeft: "10px",
+                                        display: 'flex',
+                                        marginLeft: '10px',
                                       }}
                                     >
-                                      {op.optionImage !== "" ? (
+                                      {op.optionImage !== '' ? (
                                         <img
                                           src={op.optionImage}
-                                          width="64%"
-                                          height="auto"
+                                          width='64%'
+                                          height='auto'
                                         />
                                       ) : (
-                                        ""
+                                        ''
                                       )}
                                       <Divider />
                                     </div>
@@ -289,10 +299,10 @@ function UserView(props) {
                 </Grid>
                 <Grid>
                   <br></br>
-                  <div style={{ display: "flex" }}>
+                  <div style={{ display: 'flex' }}>
                     <Button
-                      variant="contained"
-                      color="primary"
+                      variant='contained'
+                      color='primary'
                       onClick={submitResponse}
                     >
                       Submit
@@ -305,8 +315,8 @@ function UserView(props) {
               </div>
             ) : (
               <div>
-                <Typography variant="body1">Form submitted</Typography>
-                <Typography variant="body2">
+                <Typography variant='body1'>Form submitted</Typography>
+                <Typography variant='body2'>
                   Thanks for submiting form
                 </Typography>
 
@@ -320,13 +330,10 @@ function UserView(props) {
 
         {/* //TODO: Add a footer here */}
       </div>
-    </div>)
+    </div>
+  );
 
-  return (
-    (questionvalues !== null) ? <h1>content here</h1>
-   
-            :<h1>loading</h1>
-  )
+  return questionvalues !== null ? displayContent : <h1>loading</h1>;
 }
 
 export default UserView;
@@ -336,7 +343,7 @@ const FormControlLabelWrapper = (props) => {
   return (
     <FormControlLabel
       control={<Radio />}
-      label={"Radio " + props.value + props.jIndex}
+      label={'Radio ' + props.value + props.jIndex}
       {...labelProps}
     />
   );
