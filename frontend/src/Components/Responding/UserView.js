@@ -36,7 +36,7 @@ function UserView(props) {
   const [questions, setQuestions] = React.useState([]);
   const [value, setValue] = React.useState([]);
   const [questionvalues, setQuestionvalues] = React.useState(
-    new Array(100).fill(0)
+    new Array(100).fill(" ")
   );
   // let questionvalues = ;
   //console.log(value);
@@ -167,7 +167,7 @@ function UserView(props) {
               <MenuIcon />
             </IconButton>
             <Typography variant='h6' style={{}}>
-              Velocity Forms
+              Online Contests
             </Typography>
           </Toolbar>
         </AppBar>
