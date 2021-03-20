@@ -167,7 +167,7 @@ function UserView(props) {
               <MenuIcon />
             </IconButton>
             <Typography variant='h6' style={{}}>
-              Velocity Forms
+              Altura Forms
             </Typography>
           </Toolbar>
         </AppBar>
