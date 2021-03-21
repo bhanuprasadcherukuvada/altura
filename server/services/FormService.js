@@ -9,12 +9,14 @@ const mongoose = require('mongoose');
 module.exports = {
     formsGet : async(req,res)=>{
         try{
-            var result = await FormModel.find().lean();
+            var result = await FormModel.find({}).lean();
             res.send(result);     
         }catch(e){
             res.send(e);
         }
     },
+
+    
 
     createForm: async(req,res)=>{     
         try {

@@ -50,6 +50,7 @@ export default function Razorpay(props) {
         alert(response.razorpay_payment_id);
         alert(response.razorpay_order_id);
         alert(response.razorpay_signature);
+        //sendVerificationemail({ name:props.location.state.name, email:props.location.state.email})
       },
       prefill: {
         name:props.location.state.name,

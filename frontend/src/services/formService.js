@@ -59,9 +59,15 @@ export default {
             return response.data;
         })
         
-    }
+    } ,
 
-    
-    
+    getAllforms(){
+        return axios.get(API_URL+"forms").then(res=>{
+            console.log(res.data);
+            return res.data;
+        })    }
   };
+
+
+
 

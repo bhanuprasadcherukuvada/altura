@@ -17,7 +17,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import AddIcon from '@material-ui/icons/Add';
 import HomeIcon from '@material-ui/icons/Home';
 import Forms from './Form/Forms';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -28,67 +28,79 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import formService from '../services/formService';
 
+import form from "../services/formService";
+import { Grid, Paper } from '@material-ui/core';
+
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
+  },
+  paper: {
+    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    border: 0,
+    borderRadius: 3,
+    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+    color: "white",
+    margin: theme.spacing(2),
+    padding: theme.spacing(2),
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
     },
   },
   search: {
-    position: 'relative',
+    position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
+    "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginRight: theme.spacing(2),
     marginLeft: theme.spacing(2),
 
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(3),
-      width: 'auto',
+      width: "auto",
     },
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   inputRoot: {
-    color: 'inherit',
+    color: "inherit",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
     },
   },
   sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
     },
   },
   sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
     },
   },
 }));
@@ -96,6 +108,7 @@ const useStyles = makeStyles((theme) => ({
 function Dashboard() {
   let history = useHistory();
   const classes = useStyles();
+  
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
@@ -103,6 +116,7 @@ function Dashboard() {
   const [formTitle, setFormTitle] = React.useState('');
   const [formDescription, setFormDescription] = React.useState('');
 
+ 
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -116,6 +130,17 @@ function Dashboard() {
   React.useEffect(() => {
     setUser(auth.getCurrentUser());
   }, []);
+
+  const [contestdata, setContestData] = React.useState([]);
+
+
+   React.useEffect( async () => {
+
+     setContestData( await form.getAllforms());
+   }, []);
+
+
+  
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -223,20 +248,23 @@ function Dashboard() {
     </Menu>
   );
 
+
+  let contentblock = JSON.stringify(contestdata);
+
   return (
     <div className={classes.grow}>
-      <AppBar position='static' style={{ backgroundColor: 'teal' }}>
+      <AppBar position="static" style={{ backgroundColor: "teal" }}>
         <Toolbar>
           <IconButton
-            edge='start'
+            edge="start"
             className={classes.menuButton}
-            color='inherit'
-            aria-label='open drawer'
+            color="inherit"
+            aria-label="open drawer"
           >
             <HomeIcon />
           </IconButton>
 
-          <Typography className={classes.title} variant='h6' noWrap>
+          <Typography className={classes.title} variant="h6" noWrap>
             Altura Forms
           </Typography>
 
@@ -245,28 +273,28 @@ function Dashboard() {
               <SearchIcon />
             </div>
             <InputBase
-              placeholder='Search…'
+              placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
-              inputProps={{ 'aria-label': 'search' }}
+              inputProps={{ "aria-label": "search" }}
             />
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton
-              aria-label='Create new form'
-              color='inherit'
+              aria-label="Create new form"
+              color="inherit"
               onClick={handleClickOpen}
             >
               <AddIcon />
             </IconButton>
 
             <IconButton
-              edge='end'
-              aria-label='account of current user'
-              color='inherit'
+              edge="end"
+              aria-label="account of current user"
+              color="inherit"
               onClick={logout}
             >
               <AccountCircle />
@@ -275,11 +303,11 @@ function Dashboard() {
 
           <div className={classes.sectionMobile}>
             <IconButton
-              aria-label='show more'
+              aria-label="show more"
               aria-controls={mobileMenuId}
-              aria-haspopup='true'
+              aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-              color='inherit'
+              color="inherit"
             >
               <MoreIcon />
             </IconButton>
@@ -293,9 +321,9 @@ function Dashboard() {
           <Dialog
             open={open}
             onClose={handleClose}
-            aria-labelledby='form-dialog-title'
+            aria-labelledby="form-dialog-title"
           >
-            <DialogTitle id='form-dialog-title'>Create Form</DialogTitle>
+            <DialogTitle id="form-dialog-title">Create Form</DialogTitle>
             <DialogContent>
               <DialogContentText>
                 Creating a new empty form, just add form name and description if
@@ -303,10 +331,10 @@ function Dashboard() {
               </DialogContentText>
               <TextField
                 autoFocus
-                margin='dense'
-                id='name'
-                label='Form Name'
-                type='text'
+                margin="dense"
+                id="name"
+                label="Form Name"
+                type="text"
                 fullWidth={false}
                 value={formTitle}
                 onChange={(e) => {
@@ -316,10 +344,10 @@ function Dashboard() {
               <br></br>
               <TextField
                 autoFocus
-                margin='dense'
-                id='description'
-                label='Form description'
-                type='text'
+                margin="dense"
+                id="description"
+                label="Form description"
+                type="text"
                 fullWidth
                 value={formDescription}
                 onChange={(e) => {
@@ -329,19 +357,42 @@ function Dashboard() {
               <br></br>
             </DialogContent>
             <DialogActions>
-              <Button onClick={cancelAddForm} color='primary'>
+              <Button onClick={cancelAddForm} color="primary">
                 Cancel
               </Button>
-              <Button onClick={createForm} color='primary'>
+              <Button onClick={createForm} color="primary">
                 Create
               </Button>
             </DialogActions>
           </Dialog>
         </div>
-        <div style={{ marginTop: '10px' }}>
+        <div style={{ marginTop: "10px" }}>
           <Forms userId={user.id} />
         </div>
       </div>
+      <Grid container direction='row'>
+        
+        {contestdata.map(contest =>{
+          return (
+            <Grid item xs={12} md={3} className={classes.grow}>
+              <Paper className={classes.paper}>
+                <Typography>{contest.name}</Typography>
+                <Typography>{contest.description}</Typography>
+                <Button variant='primary'>
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    to={{
+                      path: `/s/${contest._id}`,
+                    }}
+                  >
+                    Link to Registration
+                  </Link>
+                </Button>
+              </Paper>
+            </Grid>
+          );
+        })}
+      </Grid>
     </div>
   );
 }
