@@ -378,16 +378,13 @@ function Dashboard() {
               <Paper className={classes.paper}>
                 <Typography>{contest.name}</Typography>
                 <Typography>{contest.description}</Typography>
-                <Button variant='primary'>
-                  <Link
-                    style={{ textDecoration: "none" }}
-                    to={{
-                      path: `/s/${contest._id}`,
-                    }}
-                  >
-                    Link to Registration
-                  </Link>
-                </Button>
+                {console.log(contest._id)}
+
+                
+                  <Button onClick={()=> history.push(`/s/${contest._id}`)}>
+                    Link to registration
+                  </Button>
+                  
               </Paper>
             </Grid>
           );

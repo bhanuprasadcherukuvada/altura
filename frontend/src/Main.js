@@ -22,13 +22,10 @@ function Main() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
-
-          <PrivateRoute path="/form/:formId" component={EditForm} />
           <Route exact path="/s/:formId" component={UserView} />
-          <Route
-            path="/payment"
-            render={(props) => <Razorpay {...props} />}
-          />
+          <PrivateRoute path="/form/:formId" component={EditForm} />
+
+          <Route path="/payment" render={(props) => <Razorpay {...props} />} />
         </Switch>
       </Router>
     </div>
